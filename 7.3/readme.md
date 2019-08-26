@@ -1,4 +1,4 @@
-# PHP-FPM Docker Image
+# PHP-PPM Docker Image
 
 Extends the PHP base image to provide FPM.
 
