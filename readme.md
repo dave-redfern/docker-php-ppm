@@ -27,7 +27,7 @@ If you need to install from custom git repos, be sure to setup git.
 Import from this image and add additional setup steps to build your app. For example:
 
 ```dockerfile
-FROM somnambulist/docker:ppm
+FROM somnambulist/php-ppm:7.3-latest
 
 RUN apk --update add ca-certificates \
     && apk update \
