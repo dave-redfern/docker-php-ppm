@@ -20,9 +20,9 @@ RUN apk --update add ca-certificates \
     && rm -rf /var/cache/apk/* /tmp/*
 
 # setup php-pm -- shamelessly borrowed from the above composer code :)
-RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/dave-redfern/somnambulist-phppm-phar/releases/download/2.0.3/ppm.phar \
+RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/dave-redfern/somnambulist-phppm-phar/releases/download/3.0.0/ppm.phar \
   && php -r " \
-  \$signature = '8902ffa171654acaa6a95f7c51d55bf9bc4174b802246eb378b521f44ca7c97916f0f79954571a9c4f46629050d43ff9'; \
+  \$signature = '15647827caca45a33761e1f61f95609cb00d2eec8a11670c770a2dd4243415baa8672b985d77eb307740f89145d902a8'; \
   \$hash = hash_file('sha384', '/tmp/ppm.phar'); \
   if (!hash_equals(\$signature, \$hash)) { \
     unlink('/tmp/ppm.phar'); \
