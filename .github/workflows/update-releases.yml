@@ -1,0 +1,27 @@
+name: update-releases
+
+on:
+    schedule:
+        - cron:  '1 * * * *'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            - name: Setup ruby
+              uses: actions/setup-ruby@v1
+              with:
+                  ruby-version: '2.X'
+            - name: Build project
+              run: |
+                    # based on https://garethr.dev/2019/09/github-actions-that-commit-to-github/
+                    # and https://stackoverflow.com/questions/57921401/push-to-origin-from-github-action/58393457#58393457
+                    command -v bundler || gem install bundler
+                    bundle install
+                    ruby update-releases.rb
+                    git config --global user.name 'Dave Redfern'
+                    git config --global user.email 'dave-redfern@users.noreply.github.com'
+                    git add .
+                    git diff --quiet && git diff --staged --quiet || (git commit -m "Updating ppm-phar version"; git push)
