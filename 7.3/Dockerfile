@@ -1,5 +1,5 @@
 #
-# Dockerfile for a minimal PHP-FPM run time
+# Dockerfile for a minimal PHP-PPM run time
 #
 
 FROM somnambulist/php-base:7.3-latest
