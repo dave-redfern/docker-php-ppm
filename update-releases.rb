@@ -3,14 +3,15 @@ require 'octokit'
 require 'open-uri'
 
 class RepoDef
-  attr_accessor :obj_class, :app_name, :alias, :desc, :repo, :depends
+  attr_accessor :obj_class, :app_name, :alias, :desc, :repo, :depends, :php_version
 
-  def initialize(obj_class, app_name, c_alias, desc, repo, depends = nil)
+  def initialize(obj_class, app_name, c_alias, desc, repo, php, depends = nil)
     @obj_class = obj_class
     @app_name = app_name
     @alias = c_alias
     @desc = desc
     @repo = repo
+    @php_version = php
     @depends = depends
   end
 
@@ -35,6 +36,7 @@ class RepoDef
         '__DESC__' => @desc,
         '__REPO__' => @repo,
         '__ALIAS__' => @alias,
+        '__PHP_VERSION__' => @php_version,
         '__DEPENDS__' => if @depends.nil? then '' else @depends end,
 
         # from the latest release file info
@@ -62,7 +64,7 @@ template = <<-'TMP'
 # Dockerfile for a minimal PHP-PPM run time
 #
 
-FROM somnambulist/php-base:7.3-latest
+FROM somnambulist/php-base:__PHP_VERSION__-latest
 
 RUN apk --update add ca-certificates \
     && apk update \
@@ -95,8 +97,16 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https
   && ppm --ansi --version --no-interaction
 TMP
 
-d  = RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar')
-re = Regexp.new(d.map.keys.map { |x| Regexp.escape(x) }.join('|'))
+toProcess = [
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.3'),
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.4'),
+]
 
-puts 'Updating Dockerfile for ' + d.app_name + "\n"
-File.write('7.3/Dockerfile', template.gsub(re, d.map))
+toProcess.each do |d|
+  map = d.map
+  re = Regexp.new(map.keys.map { |x| Regexp.escape(x) }.join('|'))
+  classdef = template.gsub(re, map)
+
+  puts 'Updating Dockerfile for ' + d.php_version + "\n"
+  File.write(d.php_version + '/Dockerfile', classdef)
+end

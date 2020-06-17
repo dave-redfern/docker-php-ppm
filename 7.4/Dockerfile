@@ -2,7 +2,7 @@
 # Dockerfile for a minimal PHP-PPM run time
 #
 
-FROM somnambulist/php-base:7.3-latest
+FROM somnambulist/php-base:7.4-latest
 
 RUN apk --update add ca-certificates \
     && apk update \
