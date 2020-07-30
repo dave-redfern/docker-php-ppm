@@ -4,7 +4,11 @@ Extends the PHP base image to provide a container with PHP-PM as a phar archive.
 
 ### Tags
 
-This project is tagged for PHP 7.2 (7.2.X) and PHP 7.3.X. PHP 7.3 uses Alpine 3.10.
+This project is tagged for:
+ 
+ * PHP 7.2 (7.2.X), Alpine 3.9
+ * PHP 7.3 (7.3.X), Alpine 3.12
+ * PHP 7.4 (7.4.X), Alpine Edge
 
 Note:
 
@@ -27,7 +31,7 @@ If you need to install from custom git repos, be sure to setup git.
 Import from this image and add additional setup steps to build your app. For example:
 
 ```dockerfile
-FROM somnambulist/php-ppm:7.3-latest
+FROM somnambulist/php-ppm:7.4-latest
 
 RUN apk --update add ca-certificates \
     && apk update \
@@ -103,7 +107,7 @@ to the ppm.json by the docker-entrypoint if needed:
     "app-env": "docker",
     "debug": 0,
     "logging": 0,
-    "bootstrap": "PHPPM\\Bootstraps\\Symfony4",
+    "bootstrap": "PHPPM\\Bootstraps\\SomnambulistSymfony",
     "max-requests": 500,
     "max-execution-time": 60,
     "populate-server-var": true,
@@ -113,9 +117,9 @@ to the ppm.json by the docker-entrypoint if needed:
 }
 ```
 
-__Note:__ The Symfony4 bootstrap mentioned here is an extension provided by the compiled phar.
-It replaces the standard Symfony bootstrap with one that can do kernel detection and supports
-multiple environment files.
+__Note:__ SomnambulistSymfony bootstrap mentioned here is an extension provided by the compiled phar.
+It replaces the standard Symfony bootstrap with one that can do kernel detection from a composer.json
+file. The standard php-pm Symfony adapter from 2.0.6 can properly resolve .env files.  
 
 __Note:__ while php-pm can be used to serve full-stack applications, it works much better for
 APIs that do not have to deal with assets and sessions.
