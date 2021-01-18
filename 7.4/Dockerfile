@@ -4,6 +4,7 @@
 
 FROM somnambulist/php-base:7.4-latest
 
+# use php8 for php 8.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
