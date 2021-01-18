@@ -66,6 +66,7 @@ template = <<-'TMP'
 
 FROM somnambulist/php-base:__PHP_VERSION__-latest
 
+# use php8 for php 8.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
@@ -100,6 +101,7 @@ TMP
 toProcess = [
   RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.3'),
   RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.4'),
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.0'),
 ]
 
 toProcess.each do |d|
