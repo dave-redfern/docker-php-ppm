@@ -62,7 +62,8 @@ COPY . .
 EXPOSE 8080
 
 # certain settings could be overridden such as the ip / workers
-#CMD [ "/docker-entrypoint.sh", "start", "--workers=2", "--cgi-path=/usr/bin/php-cgi", "--host=0.0.0.0" ]
+#CMD [ "/docker-entrypoint.sh", "start", "--workers=2", "--cgi-path=/usr/bin/php-cgi7", "--host=0.0.0.0" ]
+#CMD [ "/docker-entrypoint.sh", "start", "--workers=2", "--cgi-path=/usr/bin/php-cgi8", "--host=0.0.0.0" ]
 CMD [ "/docker-entrypoint.sh", "start" ]
 ```
 
