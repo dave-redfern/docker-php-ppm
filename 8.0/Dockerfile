@@ -10,13 +10,13 @@ RUN apk --update add ca-certificates \
     && apk upgrade \
     && apk --no-cache add -U \
     # Packages
-    php7-cgi \
-    php7-pcntl \
-    php7-posix \
-    php7-shmop \
-    php7-sysvshm \
-    php7-sysvshm \
-    php7-sysvshm \
+    php8-cgi \
+    php8-pcntl \
+    php8-posix \
+    php8-shmop \
+    php8-sysvshm \
+    php8-sysvshm \
+    php8-sysvshm \
     # Clean up
     && rm -rf /var/cache/apk/* /tmp/*
 

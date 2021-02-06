@@ -15,6 +15,10 @@ class RepoDef
     @depends = depends
   end
 
+  def version
+    @php_version.chr
+  end
+
   def latest_release
     client = Octokit::Client.new
     release = client.latest_release @repo
@@ -37,6 +41,8 @@ class RepoDef
         '__REPO__' => @repo,
         '__ALIAS__' => @alias,
         '__PHP_VERSION__' => @php_version,
+        '__PHP_MAJOR_VERSION__' => version,
+        '__PHP_PM_VERSION' => @ppm_version,
         '__DEPENDS__' => if @depends.nil? then '' else @depends end,
 
         # from the latest release file info
@@ -66,19 +72,19 @@ template = <<-'TMP'
 
 FROM somnambulist/php-base:__PHP_VERSION__-latest
 
-# use php8 for php 8.X packages
+# use php__PHP_MAJOR_VERSION__ for php __PHP_MAJOR_VERSION__.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
     && apk --no-cache add -U \
     # Packages
-    php7-cgi \
-    php7-pcntl \
-    php7-posix \
-    php7-shmop \
-    php7-sysvshm \
-    php7-sysvshm \
-    php7-sysvshm \
+    php__PHP_MAJOR_VERSION__-cgi \
+    php__PHP_MAJOR_VERSION__-pcntl \
+    php__PHP_MAJOR_VERSION__-posix \
+    php__PHP_MAJOR_VERSION__-shmop \
+    php__PHP_MAJOR_VERSION__-sysvshm \
+    php__PHP_MAJOR_VERSION__-sysvshm \
+    php__PHP_MAJOR_VERSION__-sysvshm \
     # Clean up
     && rm -rf /var/cache/apk/* /tmp/*
 
@@ -99,7 +105,6 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https
 TMP
 
 toProcess = [
-  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.3'),
   RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.4'),
   RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.0'),
 ]
