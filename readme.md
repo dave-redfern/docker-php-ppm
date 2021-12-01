@@ -5,11 +5,10 @@ Extends the PHP base image to provide a container with PHP-PM as a phar archive.
 ### Tags
 
 This project is tagged for:
- 
- * PHP 7.2 (7.2.X), Alpine 3.9
+
  * PHP 7.3 (7.3.X), Alpine 3.12
  * PHP 7.4 (7.4.X), Alpine 3.13
- * PHP 8.0 (8.0.X), Alpine 3.13
+ * PHP 8.0 (8.0.X), Alpine 3.15
 
 Note:
 
@@ -32,7 +31,7 @@ If you need to install from custom git repos, be sure to setup git.
 Import from this image and add additional setup steps to build your app. For example:
 
 ```dockerfile
-FROM somnambulist/php-ppm:7.4-latest
+FROM somnambulist/php-ppm:8.0-latest
 
 RUN apk --update add ca-certificates \
     && apk update \
@@ -48,6 +47,7 @@ WORKDIR /app
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod 755 /docker-entrypoint.sh
+RUN composer selfupdate
 
 COPY composer.* ./
 COPY ppm.* ./
