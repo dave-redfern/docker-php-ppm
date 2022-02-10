@@ -3,16 +3,16 @@ require 'octokit'
 require 'open-uri'
 
 class RepoDef
-  attr_accessor :obj_class, :app_name, :alias, :desc, :repo, :depends, :php_version
+  attr_accessor :obj_class, :app_name, :alias, :desc, :repo, :depends, :php_version, :ppm_version
 
-  def initialize(obj_class, app_name, c_alias, desc, repo, php, depends = nil)
+  def initialize(obj_class, app_name, c_alias, desc, repo, php, ppm = nil)
     @obj_class = obj_class
     @app_name = app_name
     @alias = c_alias
     @desc = desc
     @repo = repo
     @php_version = php
-    @depends = depends
+    @ppm_version = ppm
   end
 
   def version
@@ -21,7 +21,13 @@ class RepoDef
 
   def latest_release
     client = Octokit::Client.new
-    release = client.latest_release @repo
+
+    if @ppm_version.nil?
+        release = client.latest_release @repo
+    else
+        release = client.release_for_tag @ppm_version
+    end
+
     hash = nil
 
     unless release.assets[1]&.browser_download_url.nil?
@@ -43,7 +49,6 @@ class RepoDef
         '__PHP_VERSION__' => @php_version,
         '__PHP_MAJOR_VERSION__' => version,
         '__PHP_PM_VERSION' => @ppm_version,
-        '__DEPENDS__' => if @depends.nil? then '' else @depends end,
 
         # from the latest release file info
         '__URL__' => file.link,
@@ -105,8 +110,9 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https
 TMP
 
 toProcess = [
-  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.4'),
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.4', '6.2.0'),
   RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.0'),
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.1'),
 ]
 
 toProcess.each do |d|

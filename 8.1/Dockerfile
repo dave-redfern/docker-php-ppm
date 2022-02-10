@@ -2,28 +2,28 @@
 # Dockerfile for a minimal PHP-PPM run time
 #
 
-FROM somnambulist/php-base:7.3-latest
+FROM somnambulist/php-base:8.1-latest
 
-# add extra extensions as needed
+# use php8 for php 8.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
     && apk --no-cache add -U \
     # Packages
-    php7-cgi \
-    php7-pcntl \
-    php7-posix \
-    php7-shmop \
-    php7-sysvshm \
-    php7-sysvshm \
-    php7-sysvshm \
+    php81-cgi \
+    php81-pcntl \
+    php81-posix \
+    php81-shmop \
+    php81-sysvshm \
+    php81-sysvshm \
+    php81-sysvshm \
     # Clean up
     && rm -rf /var/cache/apk/* /tmp/*
 
 # setup php-pm -- shamelessly borrowed from the above composer code :)
-RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/somnambulist-tech/phppm-phar/releases/download/5.0.1/ppm.phar \
+RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/somnambulist-tech/phppm-phar/releases/download/6.1.0/ppm.phar \
   && php -r " \
-  \$signature = 'fb0779220c3c7206403407909efdfd8d6a82e8985d9601fcb429320ed045de65daf86301b39596e402e1d1fd664c7520'; \
+  \$signature = '02fc62b045e6cc2f04af5655878b674a909752da92ab402606c52871b70bbe6278ded673dbdc1c8c2d9130d65db9431c'; \
   \$hash = hash_file('sha384', '/tmp/ppm.phar'); \
   if (!hash_equals(\$signature, \$hash)) { \
     unlink('/tmp/ppm.phar'); \
