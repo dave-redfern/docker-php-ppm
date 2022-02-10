@@ -10,20 +10,20 @@ RUN apk --update add ca-certificates \
     && apk upgrade \
     && apk --no-cache add -U \
     # Packages
-    php81-cgi \
-    php81-pcntl \
-    php81-posix \
-    php81-shmop \
-    php81-sysvshm \
-    php81-sysvshm \
-    php81-sysvshm \
+    php8-cgi \
+    php8-pcntl \
+    php8-posix \
+    php8-shmop \
+    php8-sysvshm \
+    php8-sysvshm \
+    php8-sysvshm \
     # Clean up
     && rm -rf /var/cache/apk/* /tmp/*
 
 # setup php-pm -- shamelessly borrowed from the above composer code :)
-RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/somnambulist-tech/phppm-phar/releases/download/6.1.0/ppm.phar \
+RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/somnambulist-tech/phppm-phar/releases/download/7.0.0/ppm.phar \
   && php -r " \
-  \$signature = '02fc62b045e6cc2f04af5655878b674a909752da92ab402606c52871b70bbe6278ded673dbdc1c8c2d9130d65db9431c'; \
+  \$signature = '85d989ef614bd83a42fc56c17a5fc94c0a4210eb9333dcac6635e421b0665dd28cc2fe5ff26c300929124ea349f64bec'; \
   \$hash = hash_file('sha384', '/tmp/ppm.phar'); \
   if (!hash_equals(\$signature, \$hash)) { \
     unlink('/tmp/ppm.phar'); \
