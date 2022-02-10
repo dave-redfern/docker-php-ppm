@@ -25,7 +25,7 @@ class RepoDef
     if @ppm_version.nil?
         release = client.latest_release @repo
     else
-        release = client.release_for_tag @repo @ppm_version
+        release = client.release_for_tag(@repo, @ppm_version)
     end
 
     hash = nil
