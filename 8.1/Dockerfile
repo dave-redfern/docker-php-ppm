@@ -4,19 +4,19 @@
 
 FROM somnambulist/php-base:8.1-latest
 
-# use php8 for php 8.X packages
+# use php81 for php 81.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
     && apk --no-cache add -U \
     # Packages
-    php8-cgi \
-    php8-pcntl \
-    php8-posix \
-    php8-shmop \
-    php8-sysvshm \
-    php8-sysvshm \
-    php8-sysvshm \
+    php81-cgi \
+    php81-pcntl \
+    php81-posix \
+    php81-shmop \
+    php81-sysvshm \
+    php81-sysvshm \
+    php81-sysvshm \
     # Clean up
     && rm -rf /var/cache/apk/* /tmp/*
 

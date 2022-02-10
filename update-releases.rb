@@ -16,7 +16,11 @@ class RepoDef
   end
 
   def version
-    @php_version.chr
+    if (@php_version == '8.1')
+      '81'
+    else
+      @php_version.chr
+    end
   end
 
   def latest_release
