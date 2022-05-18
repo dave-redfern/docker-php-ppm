@@ -8,7 +8,7 @@ This project is tagged for:
 
  * PHP 7.4 (7.4.X), Alpine 3.15 (Symfony 5.4)
  * PHP 8.0 (8.0.X), Alpine 3.15 (Symfony 6+)
- * PHP 8.1 (8.1.X), Alpine Edge + testing (Symfony 6+)
+ * PHP 8.1 (8.1.X), Alpine Edge + community (Symfony 6.1+)
 
 Note:
 
@@ -37,7 +37,7 @@ RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
     && apk --no-cache add -U \
-    php7-pdo-pgsql \
+    php8-pdo-pgsql \
     && rm -rf /var/cache/apk/* /tmp/*
 
 # optionally: update composer or add to the above APK line
