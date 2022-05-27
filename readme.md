@@ -7,8 +7,8 @@ Extends the PHP base image to provide a container with PHP-PM as a phar archive.
 This project is tagged for:
 
  * PHP 7.4 (7.4.X), Alpine 3.15 (Symfony 5.4)
- * PHP 8.0 (8.0.X), Alpine 3.15 (Symfony 6+)
- * PHP 8.1 (8.1.X), Alpine Edge + community (Symfony 6.1+)
+ * PHP 8.0 (8.0.X), Alpine 3.15 (Symfony 6.0)
+ * PHP 8.1 (8.1.X), Alpine 3.16 (Symfony 6.1+)
 
 Note:
 
