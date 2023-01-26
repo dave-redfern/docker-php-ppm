@@ -16,10 +16,10 @@ class RepoDef
   end
 
   def version
-    if (@php_version == '8.1')
-      '81'
-    else
+    if (@php_version == '8.0')
       @php_version.chr
+    else
+      @php_version.gsub('.', '')
     end
   end
 
@@ -114,9 +114,9 @@ RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https
 TMP
 
 toProcess = [
-  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '7.4', '6.2.0'),
-  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.0'),
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.0', '7.0.4'),
   RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.1'),
+  RepoDef.new('Ppm', 'PHP-PM', 'ppm', 'PHP-PM Process Manager for PHP as a Phar archive', 'somnambulist-tech/phppm-phar', '8.2'),
 ]
 
 toProcess.each do |d|
