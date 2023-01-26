@@ -4,7 +4,7 @@
 
 FROM somnambulist/php-base:8.2-latest
 
-# use php81 for php 81.X packages
+# use php82 for php 82.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
@@ -21,9 +21,9 @@ RUN apk --update add ca-certificates \
     && rm -rf /var/cache/apk/* /tmp/*
 
 # setup php-pm -- shamelessly borrowed from the above composer code :)
-RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/somnambulist-tech/phppm-phar/releases/download/7.0.2/ppm.phar \
+RUN curl --silent --fail --location --retry 3 --output /tmp/ppm.phar --url https://github.com/somnambulist-tech/phppm-phar/releases/download/7.1.0/ppm.phar \
   && php -r " \
-  \$signature = '8582bc69e9f923906172bd369af3b72789857db636d09cbec1707dc700caa68e6f205af43776aa2d5cc0b3321e5fe6d0'; \
+  \$signature = '2e9d6a55e2249cfafbc881ca271b8db5613ae3c1317c1dc3f6c81bb0b8049d4ea39a046ad0e6393d9c7692a5baa2e0f1'; \
   \$hash = hash_file('sha384', '/tmp/ppm.phar'); \
   if (!hash_equals(\$signature, \$hash)) { \
     unlink('/tmp/ppm.phar'); \
