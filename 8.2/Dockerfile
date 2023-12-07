@@ -4,7 +4,7 @@
 
 FROM somnambulist/php-base:8.2-latest
 
-# use php82 for php 82.X packages
+# use php82 for php 8.2.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \

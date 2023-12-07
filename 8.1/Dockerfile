@@ -4,7 +4,7 @@
 
 FROM somnambulist/php-base:8.1-latest
 
-# use php81 for php 81.X packages
+# use php81 for php 8.1.X packages
 RUN apk --update add ca-certificates \
     && apk update \
     && apk upgrade \
